@@ -27,11 +27,11 @@ const Dashboard = () => {
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-5">
-                                <h2>User <b>Management</b></h2>
+                                <h2>Product <b>Management</b></h2>
                             </div>
                             <div class="col-sm-7">
-                                <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
-                                <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
+                                <a href="#" class="btn btn-secondary"><span>Add New User</span></a>
+                                <a href="#" class="btn btn-secondary"><span>Export to Excel</span></a>
                             </div>
                         </div>
                     </div>
@@ -52,12 +52,10 @@ const Dashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-
-
                             {
                                 products.map(product => (
                                     <tr key={product.id} product={product} >
-                                        <td>1</td>
+                                        <td>{product.createdDate}</td>
                                         <td><img src={product.images} class="avatar" alt="Avatar" width="100px" height="100px" /> </td>
                                         <td>{product.name}</td>
                                         <td>{product.price}</td>

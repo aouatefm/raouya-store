@@ -1,34 +1,40 @@
 import React, { useState } from "react"
-import firebase, { fb } from "../firebase"
+import { fb, db } from "../firebase"
 
 const Product = () => {
-    //useState() hook captures the value from the input value
-    const [name, setName] = useState("")
-    const [price, setPrice] = useState("")
+    const [name, setName] = useState(null)
+    const [price, setPrice] = useState(null)
+    const [material, setMaterial] = useState("")
     const [shipping, setShipping] = useState("")
     const [weight, setWeight] = useState(null)
     const [width, setWidth] = useState(null)
     const [length, setLength] = useState(null)
     const [height, setHeight] = useState(null)
-    const [material, setMaterial] = useState("")
-    const [image, setImage] = useState("")
+    const [images, setImage] = useState(null)
 
-    const onSubmit = e => {
-        e.preventDefault()
-        firebase
-            .firestore()
-            .collection("products")
-            .add({
-                name,
-                price,
-                shipping,
-                weight,
-                width,
-                length,
-                height,
-                material,
-                image
-            })
+
+    const onFileChange = async (e) => {
+        const file = e.target.files[0];
+        const storageRef = fb.storage().ref();
+        const fileRef = storageRef.child(file.name);
+        await fileRef.put(file);
+        setImage(await fileRef.getDownloadURL());
+    };
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        await db.collection("products").add({
+            images,
+            name,
+            price,
+            shipping,
+            weight,
+            width,
+            length,
+            height,
+            material,
+            createdDate: Date().toLocaleString()
+        })
             .then(() =>
                 setName(""),
                 setPrice(""),
@@ -39,16 +45,7 @@ const Product = () => {
                 setHeight(""),
                 setMaterial(""),
                 setImage(""))
-    }
-    const onFileChange = async (e) => {
-        const file = e.target.files[0];
-        const storageRef = fb.storage().ref();
-        const fileRef = storageRef.child(file.name);
-        await fileRef.put(file);
-        console.log(fileRef.getDownloadURL())
-        setImage(fileRef.getDownloadURL());
     };
-
     return (
         <div className="container" style={{ marginBottom: "20%" }}>
             <form onSubmit={onSubmit}>
@@ -117,7 +114,6 @@ const Product = () => {
                         onChange={e => setWidth(e.currentTarget.value)} />
                     <small class="form-text text-muted">La Largeur doit être en centimètres (cm) </small>
                 </div>
-
                 <div class="form-group">
                     <label >Weight</label>
                     <input type="number" min="0" class="form-control" placeholder="Weight"
@@ -127,13 +123,13 @@ const Product = () => {
                         onChange={e => setWeight(e.currentTarget.value)} />
                     <small class="form-text text-muted">Le Poids doit être en kilogramme (kg) </small>
                 </div>
+                {/* <button>Submit</button> */}
                 <div class="form-group">
                     <label >Image</label>
                     <input type="file" class="form-control" placeholder="Image"
-                        value={image}
                         name="image"
                         required
-                        onChange={e => setImage(e.currentTarget.value)} />
+                        onChange={onFileChange} />
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
