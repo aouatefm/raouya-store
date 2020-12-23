@@ -1,12 +1,19 @@
 import React, { Component, useEffect, useState } from 'react'
 import './dashboard.scss'
+import { Link } from 'react-router-dom'
 import { db } from './firebase'
+import Moment from 'moment';
+import Alert from 'react-bootstrap/Alert';
+
+
 function useProducts() {
     const [products, setProducts] = useState([]);
+    const [alert, showAlert] = useState(false);
     useEffect(() => {
         db.collection('products')
             .onSnapshot((snapshot) => {
                 const newProducts = snapshot.docs.map((doc) => ({
+                    id: doc.id,
                     ...doc.data()
                 }))
                 setProducts(newProducts);
@@ -15,7 +22,11 @@ function useProducts() {
     return products
 }
 function deleteProduct(id) {
-    db.collection('products').doc(id).delete()
+    db.collection("products").doc(id).delete().then(function () {
+        console.log("Document successfully deleted!");
+    }).catch(function (error) {
+        console.error("Error removing document: ", error);
+    });
 }
 const Dashboard = () => {
     const products = useProducts();
@@ -30,7 +41,7 @@ const Dashboard = () => {
                                 <h2>Product <b>Management</b></h2>
                             </div>
                             <div class="col-sm-7">
-                                <a href="#" class="btn btn-secondary"><span>Add New User</span></a>
+                                <a href="#" class="btn btn-secondary"><span><Link to='/newproduct'>Add New Product</Link></span></a>
                                 <a href="#" class="btn btn-secondary"><span>Export to Excel</span></a>
                             </div>
                         </div>
@@ -54,8 +65,8 @@ const Dashboard = () => {
                         <tbody>
                             {
                                 products.map(product => (
-                                    <tr key={product.id} product={product} >
-                                        <td>{product.createdDate}</td>
+                                    <tr key={product.id}  >
+                                        <td>{Moment(product.createdDate).format('MMMM Do YYYY, h:mm:ss a')}</td>
                                         <td><img src={product.images} class="avatar" alt="Avatar" width="100px" height="100px" /> </td>
                                         <td>{product.name}</td>
                                         <td>{product.price}</td>
@@ -66,9 +77,8 @@ const Dashboard = () => {
                                         <td>{product.width}</td>
                                         <td>{product.weight}</td>
                                         <td>
-                                            <a href="#" class="delete" title="Delete" data-toggle="tooltip" onClick={deleteProduct('mTnqeLwzrMRZSttSoSMC')}> Delete</a>
-                                            <a href="#" class="settings" title="Settings" data-toggle="tooltip">
-
+                                            <a href="#" class="delete" title="Delete" data-toggle="tooltip" onClick={() => deleteProduct(product.id)}>
+                                                Delete
                                             </a>
                                         </td>
                                     </tr>
@@ -79,6 +89,7 @@ const Dashboard = () => {
 
                 </div>
             </div>
+
         </div>
     )
 }

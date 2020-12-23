@@ -7,14 +7,14 @@ import Dashboard from '../components/Dashboard'
 
 const Routes = () => {
     return (
-        <Router>
-            <Switch>
-                <Route exact path="/" component={Store} />
-                <Route path="/about" component={About} />
-                <Route path="/newproduct" component={NewProduct} />
-                <Route path="/dashboard" component={Dashboard} />
-            </Switch>
-        </Router>
+
+        <Switch>
+            <Route exact path="/" component={Store} />
+            <Route path="/about" component={About} />
+            <Route path="/newproduct" component={NewProduct} />
+            <Route path="/dashboard" component={Dashboard} />
+        </Switch>
+
     );
 }
 
