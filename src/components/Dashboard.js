@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import { db } from './firebase'
 import Moment from 'moment';
 import Alert from 'react-bootstrap/Alert';
-
+import { DeleteIcon } from '../assets/icons'
+import { EditIcon } from '../assets/icons'
 
 function useProducts() {
     const [products, setProducts] = useState([]);
@@ -78,8 +79,10 @@ const Dashboard = () => {
                                         <td>{product.weight}</td>
                                         <td>
                                             <a href="#" class="delete" title="Delete" data-toggle="tooltip" onClick={() => deleteProduct(product.id)}>
-                                                Delete
+                                                <DeleteIcon />
+
                                             </a>
+                                            <a><EditIcon /></a>
                                         </td>
                                     </tr>
                                 ))
