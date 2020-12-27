@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { Link, BrowserRouter as Router } from "react-router-dom";
 import styles from './header.scss';
 import Layout from '../Layout'
+import { auth } from '../firebase'
 import './header.scss'
 const Header = () => {
-
+    const isConnected = auth
 
     return (
         <>
@@ -13,6 +14,7 @@ const Header = () => {
                 <Link to='/about' className="link">About</Link>
                 <Link to='/cart' className="link">  Cart (3)</Link>
                 <Link to='/dashboard' className="link">Dashboard</Link>
+
                 <Link to='/login' className="link">Login</Link>
 
             </header>

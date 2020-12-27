@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { fb, db } from "../firebase"
+import { db, storage } from "../firebase"
 
 const Product = () => {
     const [name, setName] = useState(null)
@@ -15,7 +15,7 @@ const Product = () => {
 
     const onFileChange = async (e) => {
         const file = e.target.files[0];
-        const storageRef = fb.storage().ref();
+        const storageRef = storage.ref();
         const fileRef = storageRef.child(file.name);
         await fileRef.put(file);
         setImage(await fileRef.getDownloadURL());
