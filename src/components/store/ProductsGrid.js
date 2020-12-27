@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import './productsGrid.scss'
 import ProductItem from './ProductItem '
 import { db } from '../firebase'

@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
-import { Link, BrowserRouter as Router } from "react-router-dom";
-import styles from './header.scss';
+import React from 'react';
+import { Link } from "react-router-dom";
 import Layout from '../Layout'
-import { auth } from '../firebase'
 import './header.scss'
 const Header = () => {
-    const isConnected = auth
 
     return (
         <>
