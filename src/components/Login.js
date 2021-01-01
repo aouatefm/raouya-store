@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { auth } from './firebase'
 import { useHistory } from "react-router-dom"
 import { Alert } from "react-bootstrap"
-import { useAuth } from "../components/contexts/AuthContext"
-
+import { login } from '../firebase/auth'
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState();
     const [password, setPassword] = useState('');
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
@@ -13,18 +11,22 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        let newUser;
+        setLoading(true)
         try {
-            setError("")
-            setLoading(true)
-            await auth.signInWithEmailAndPassword(email, password)
-            history.push("/dashboard")
+            newUser = await login(email, password)
+
         } catch (error) {
             console.log(error)
-            setError("Fail to Login")
-        }
-        setLoading(false)
-    }
 
+        }
+        if (newUser) {
+            history.push(`/store`)
+        }
+        else {
+            setLoading(false);
+        }
+    }
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>

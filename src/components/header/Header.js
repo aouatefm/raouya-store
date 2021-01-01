@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import Layout from '../Layout'
 import './header.scss'
-const Header = () => {
+import auth from '../firebase'
+const Header = (props) => {
+    const { currentUser } = props
 
     return (
         <>
@@ -11,8 +13,11 @@ const Header = () => {
                 <Link to='/about' className="link">About</Link>
                 <Link to='/cart' className="link">  Cart (3)</Link>
                 <Link to='/dashboard' className="link">Dashboard</Link>
+                {currentUser ?
+                    <Link to='#' className="link" onClick={() => { auth.signOut() }}>Logout</Link>
+                    : <Link to='/login' class
+                        Name="link">Login</Link>}
 
-                <Link to='/login' className="link">Login</Link>
 
             </header>
             <Layout title="Raouiya Store" description="This is the Store Page" />
