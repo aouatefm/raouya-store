@@ -1,27 +1,31 @@
 import React, { useState } from 'react'
-import { useHistory, Link } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import { Alert } from "react-bootstrap"
-import { login } from '../firebase/auth'
-const Login = () => {
+import { signup } from '../firebase/auth';
+
+
+
+
+const Signup = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState('');
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useHistory()
-
     const handleSubmit = async (e) => {
         e.preventDefault()
+        console.log(email)
+        console.log(password)
         let newUser;
-        setLoading(true)
+        setLoading(true);
         try {
-            newUser = await login(email, password)
+            newUser = await signup(email, password);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
         if (newUser) {
-            history.push(`/`)
-        }
-        else {
+            history.push(`/dashboard`);
+        } else {
             setLoading(false);
         }
     }
@@ -49,10 +53,8 @@ const Login = () => {
                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>
                 <button type="submit" class="btn btn-dark" disabled={loading}>Submit</button>
-                or
-                <Link to="/signup">Sign Up</Link>
             </form>
         </div>
     )
 }
-export default Login
+export default Signup

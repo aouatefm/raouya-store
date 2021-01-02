@@ -2,15 +2,17 @@ import Routes from './routes/index'
 import Header from './components/header/Header';
 import { useState, useEffect } from 'react'
 import auth from './components/firebase'
+import { UserProvider } from './firebase/UserProvider'
+
 function App() {
-  const [currentUser, setCurrentUser] = useState()
-  const [loading, setLoading] = useState(true)
 
   return (
-    <div >
-      <Header />
-      <Routes />
-    </div>
+    <UserProvider>
+      <div >
+        <Header />
+        <Routes />
+      </div>
+    </UserProvider>
   );
 }
 

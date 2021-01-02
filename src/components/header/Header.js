@@ -1,10 +1,17 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Layout from '../Layout'
 import './header.scss'
-import auth from '../firebase'
-const Header = (props) => {
-    const { currentUser } = props
+import { useSession } from '../../firebase/UserProvider'
+import { logout } from '../../firebase/auth'
+
+const Header = () => {
+    const history = useHistory()
+    const { user } = useSession()
+    const logoutUser = async () => {
+        await logout();
+        history.push('/login');
+    };
 
     return (
         <>
@@ -12,13 +19,14 @@ const Header = (props) => {
                 <Link to='/' className="link">Store</Link>
                 <Link to='/about' className="link">About</Link>
                 <Link to='/cart' className="link">  Cart (3)</Link>
-                <Link to='/dashboard' className="link">Dashboard</Link>
-                {currentUser ?
-                    <Link to='#' className="link" onClick={() => { auth.signOut() }}>Logout</Link>
-                    : <Link to='/login' class
-                        Name="link">Login</Link>}
+                {user && <Link to='/dashboard' className="link">Dashboard</Link>}
+                {user && <Link className="link" onClick={logoutUser}>Logout</Link>}
+                {!user && <Link to='/login' className="link">Login</Link>}
 
 
+                {/* <Link to='/login' className="link">Login</Link>
+                <Link to='/signup' className="link">Signup</Link>
+                {!!user && <Link className="link"> onClick={logoutUser}>Logout</Link>} */}
             </header>
             <Layout title="Raouiya Store" description="This is the Store Page" />
 
@@ -27,3 +35,4 @@ const Header = (props) => {
 }
 
 export default Header;
+
