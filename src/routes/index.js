@@ -8,6 +8,7 @@ import Login from '../components/Login'
 import Signup from '../components/Signup'
 import SingleProduct from '../components/store/SingleProduct'
 import ProfileRedirect from '../routes/ProfileRedirect'
+
 const Routes = () => {
     return (
 
@@ -16,12 +17,10 @@ const Routes = () => {
             <Route path="/about" component={About} />
             <Route path="/newproduct" component={NewProduct} />
             <Route path="/dashboard" component={Dashboard} />
-            <Route path="/product" component={SingleProduct} />
+            <Route path="/products/:id" component={SingleProduct} />
             <ProfileRedirect path="/login" component={Login} />
             <ProfileRedirect path="/signup" component={Signup} />
-            <Route exact path="/">
-                <Redirect to="/login" />
-            </Route>
+            <Route exact path="/"><Redirect to="/login" /></Route>
         </Switch>
 
     );

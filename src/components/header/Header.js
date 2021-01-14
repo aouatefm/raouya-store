@@ -10,7 +10,7 @@ const Header = () => {
     const { user } = useSession()
     const logoutUser = async () => {
         await logout();
-        history.push('/login');
+        history.push('/');
     };
 
     return (
@@ -22,12 +22,7 @@ const Header = () => {
                 {user && <Link to='/dashboard' className="link">Dashboard</Link>}
                 {user && <Link className="link" onClick={logoutUser}>Logout</Link>}
                 {!user && <Link to='/login' className="link">Login</Link>}
-
-
-                {/* <Link to='/login' className="link">Login</Link>
-                <Link to='/signup' className="link">Signup</Link>
-                {!!user && <Link className="link"> onClick={logoutUser}>Logout</Link>} */}
-            </header>
+                  </header>
             <Layout title="Raouiya Store" description="This is the Store Page" />
 
         </>

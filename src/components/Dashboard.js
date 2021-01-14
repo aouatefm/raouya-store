@@ -3,7 +3,6 @@ import './dashboard.scss'
 import { Link } from 'react-router-dom'
 import { db } from './firebase'
 import Moment from 'moment';
-import Alert from 'react-bootstrap/Alert';
 import { DeleteIcon } from '../assets/icons'
 import { EditIcon } from '../assets/icons'
 
