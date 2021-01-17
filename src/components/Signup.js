@@ -1,55 +1,124 @@
-import React, { useState } from 'react'
-import { useHistory } from "react-router-dom"
-import { Alert } from "react-bootstrap"
-import { signup } from '../firebase/auth';
-const Signup = () => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
-    const history = useHistory()
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        console.log(email)
-        console.log(password)
+import React, {useState} from 'react'
+import { useForm } from 'react-hook-form';
+import {Link} from "react-bootstrap-icons";
+import {signup} from "../firebase/auth";
+
+const Signup = (props) => {
+    const { register, handleSubmit, reset } = useForm();
+    const [isLoading, setLoading] = useState(false);
+    const onSubmit = async (data) => {
         let newUser;
         setLoading(true);
         try {
-            newUser = await signup(email, password);
+            newUser = await signup(data.email,data.password,data.firstName,data.lastName,data.phone,data.address);
+            reset();
         } catch (error) {
             console.log(error);
         }
+
         if (newUser) {
-            history.push(`/dashboard`);
+            props.history.push(`/`);
         } else {
             setLoading(false);
         }
-    }
+    };
+    const formClassName = `ui form ${isLoading ? 'loading' : ''}`;
     return (
         <div className="container">
-            <form onSubmit={handleSubmit}>
-                <h2 className="text-center mb-4">Log In</h2>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        onChange={e => setEmail(e.target.value)} />
+            <div className="login-container">
+                <div className="ui card login-card">
+                    <div className="content">
+                        <form className={formClassName} onSubmit={handleSubmit(onSubmit)}>
+                            <div className="two fields">
+                                <div className="field">
+                                    <label>
+                                        First Name
+                                        <input
+                                            type="text"
+                                            name="firstName"
+                                            placeholder="First Name"
+                                            ref={register}
+                                        />
+                                    </label>
+                                </div>
+                                <div className="field">
+                                    <label>
+                                        Last Name
+                                        <input
+                                            type="text"
+                                            name="lastName"
+                                            placeholder="Last Name"
+                                            ref={register}
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label>
+                                    Email
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        placeholder="Email"
+                                        ref={register}
+                                    />
+                                </label>
+                            </div>
+                            <div className="field">
+                                <label>
+                                    Password
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        placeholder="Password"
+                                        ref={register}
+                                    />
+                                </label>
+                            </div>
+                            <div className="field">
+                                <label>
+                                    Confirm Password
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        placeholder="Confirm Password"
+                                        ref={register}
+                                    />
+                                </label>
+                            </div>
+                            <div className="field">
+                                <label>
+                                    Address
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        placeholder="Address"
+                                        ref={register}
+                                    />
+                                </label>
+                            </div>
+                            <div className="field">
+                                <label>
+                                    Phone Number
+                                    <input
+                                        type="number"
+                                        name="phone"
+                                        placeholder="Phone Number"
+                                        ref={register}
+                                    />
+                                </label>
+                            </div>
+                            <div className="field actions">
+                                <button className="ui primary button login" type="submit">
+                                    Signup
+                                </button>
+                                or
+                                <Link to="/login">Log In</Link>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password"
-                        class="form-control"
-                        id="exampleInputPassword1"
-                        onChange={e => setPassword(e.target.value)} />
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <button type="submit" class="btn btn-dark" disabled={loading}>Submit</button>
-            </form>
+            </div>
         </div>
     )
 }
