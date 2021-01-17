@@ -1,10 +1,8 @@
-import { withRouter } from 'react-router'
 import { useState, useEffect } from "react";
 import {useParams} from 'react-router-dom';
 import {db} from "../firebase";
 import {ShippingIcon} from '../../assets/icons'
 import { formatNumber } from '../../helpers/utils';
-
 function useProduct(id) {
     const [product, setProduct] = useState([]);
     useEffect(() => {
@@ -12,7 +10,6 @@ function useProduct(id) {
             .then((snapshot) => {
                 const newProduct = snapshot.data();
                 setProduct(newProduct);
-
             })
     }, [])
     return product
@@ -36,7 +33,6 @@ const SingleProduct = () => {
                         <input type="number" className="form-control mr-1 w-25" defaultValue={1} min={1} w-25/>
                             <button className="btn btn-dark">Add</button>
                     </form>
-
                     <h3 class="my-3">Project Details</h3>
                     <table className="table table-hover ">
                         <tr>
@@ -62,6 +58,17 @@ const SingleProduct = () => {
                     </table>
                 </div>
             </div>
+            <main>
+                <h3 className="my-4">Video</h3>
+                <div  className="container">
+                    <iframe width="1300" height="500" src="https://www.youtube.com/embed/GPX_cYkjfgk"
+                         frameBorder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        className="responsive-iframe"
+                        allowFullScreen/>
+
+                </div>
+            </main>
             <h3 className="my-4">Details</h3>
                 <p> Notre attention avec cette sculpture, il nous demande de nous regarder a l´intérieur et de réfléchir
                     sur ce qui est important. Le calme et le silence qui donnent son nom a la sculpture sont un bon
@@ -94,4 +101,4 @@ const SingleProduct = () => {
         </div>
     )
 }
-export default withRouter(SingleProduct)
+export default SingleProduct
