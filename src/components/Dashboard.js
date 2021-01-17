@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import './dashboard.scss'
 import { Link } from 'react-router-dom'
 import { db } from './firebase'
@@ -8,7 +8,6 @@ import { EditIcon } from '../assets/icons'
 
 function useProducts() {
     const [products, setProducts] = useState([]);
-    const [alert, showAlert] = useState(false);
     useEffect(() => {
         db.collection('products')
             .onSnapshot((snapshot) => {
