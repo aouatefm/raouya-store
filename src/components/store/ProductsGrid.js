@@ -40,6 +40,7 @@ const ProductsGrid = () => {
                     ))
                 }
             </div>
+
         </div>
     )
 }

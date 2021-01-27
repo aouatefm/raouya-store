@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { formatNumber } from '../../helpers/utils';
-import {CartContext} from "../contexts/CartContext";
+import {CartContext} from "../contexts/cart/CartContext";
 const ProductItem = ({ product }) => {
     const { addProduct, cartItems, increase } = useContext(CartContext);
     const isInCart = product => {
