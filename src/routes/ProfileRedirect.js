@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { useSession } from '../firebase/UserProvider'
+import { useSession } from '../components/contexts/cart/UserProvider'
 const ProfileRedirect = ({ component: Component, ...rest }) => {
     const { user } = useSession()
     return (
