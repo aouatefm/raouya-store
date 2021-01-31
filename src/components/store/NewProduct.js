@@ -11,9 +11,12 @@ const Product = () => {
     const [length, setLength] = useState(null)
     const [height, setHeight] = useState(null)
     const [images, setImage] = useState(null)
+    const [imageName, setImageName] = useState(null)
 
     const onFileChange = async (e) => {
         const file = e.target.files[0];
+        const ImageName = file.name;
+        await setImageName(ImageName)
         const storageRef = storage.ref();
         const fileRef = storageRef.child(file.name);
         await fileRef.put(file);
@@ -32,6 +35,7 @@ const Product = () => {
             length,
             height,
             material,
+            imageName,
             createdDate: Date().toLocaleString()
         })
             .then(() =>

@@ -1,10 +1,10 @@
 import React, {  useEffect, useState } from 'react'
 import './dashboard.scss'
 import { Link } from 'react-router-dom'
-import { db } from './firebase'
+import { db } from '../firebase'
 import Moment from 'moment';
-import { DeleteIcon } from '../assets/icons'
-import { EditIcon } from '../assets/icons'
+import { DeleteIcon } from '../../assets/icons'
+import { EditIcon } from '../../assets/icons'
 
 function useProducts() {
     const [products, setProducts] = useState([]);

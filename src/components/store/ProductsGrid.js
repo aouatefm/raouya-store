@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './productsGrid.scss'
 import ProductItem from './ProductItem '
 import { db } from '../firebase'
+import Layout from "../../pages/Layout";
 
 function useProducts() {
     const [products, setProducts] = useState([]);
@@ -16,11 +17,12 @@ function useProducts() {
     }, [])
     return products
 }
-
 const ProductsGrid = () => {
     const products = useProducts();
     return (
         <div className="container">
+            <Layout title="Raouia Store" description="**************" >
+            </Layout>
             <div className="row">
                 <div className="col-sm-8">
                     <div className="py-3">
@@ -40,7 +42,6 @@ const ProductsGrid = () => {
                     ))
                 }
             </div>
-
         </div>
     )
 }

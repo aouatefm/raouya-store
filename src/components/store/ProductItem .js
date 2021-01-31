@@ -14,7 +14,8 @@ const ProductItem = ({ product }) => {
             <p>{product.name}</p>
             <h3 className="text-left">{formatNumber(product.price)}</h3>
             <div className="text-right">
-                <Link to={{ pathname: `/products/${product.id}`, prod: product }} className="btn btn-link btn-sm mr-2" >Details</Link>
+                {/*<Link to={{ pathname: `/products/${product.id}`, prod: product }} className="btn btn-link btn-sm mr-2" >Details</Link>*/}
+                <Link to={{ pathname: `/products/${product.id}`}} className="btn btn-link btn-sm mr-2" >Details</Link>
                 {
                     isInCart(product) &&
                     <button
